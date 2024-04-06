@@ -1,18 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_example/screen/new_image.dart';
-import 'package:go_router/go_router.dart';
+import 'package:flutter_example/style/theme.dart';
 
 void main() {
-  runApp(
-    MaterialApp.router(
-      routerConfig: GoRouter(
-        initialLocation: '/',
-        routes: [
-          GoRoute(path: '/', name: 'home', builder: (context,_) => const HomeWidget()),
-          GoRoute(path: '/new', name: 'new', builder: (context,_) => const NewPage()),
-          GoRoute(path: '/new1', name: 'new1', builder: (context,_) => const NewPage2()),
-        ]
-      ),
+  runApp(MaterialApp(
+    home: const HomeWidget(),
+    theme: customTheme
     ),
   );
 }
@@ -25,20 +17,32 @@ class HomeWidget extends StatefulWidget {
 }
 
 class _HomeWidgetState extends State<HomeWidget> {
+  int count = 0;
+
   @override
   Widget build(BuildContext context) {
+    final textTheme =  customTheme.textTheme;
     return Scaffold(
       appBar: AppBar(
-        title: const Text('route 활용 화면이동'),
-        backgroundColor: Colors.blue,
+        title: const Text('Flutter Theme'),
+        elevation: 10,
       ),
       body: Center(
-        child: TextButton(
-          child: const Text('Go to Page'),
-          onPressed: () {
-            context.pushNamed('new');
-          },
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('Press Count' , style: textTheme.bodyMedium,),
+            Text('$count' , style: textTheme.displayLarge,),
+          ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          setState(() {
+            count++;
+          });
+        },
       ),
     );
   }
